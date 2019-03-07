@@ -10,8 +10,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from AssuranceButton import AssuranceButton
 from AssuranceInput import AssuranceInput
 
-# test data is in the following order
-# (zip, tobacco usage, birthdate, height, weight, sex, employment,
+# test data is in the following order (parallels the flow)
+# (Insurance type, insuree, zip, tobacco usage, birthdate, height, weight, sex, employment,
 # number of kids, mortgage, income, quote amount, quote term, premium)
 
 test_data = [
@@ -105,16 +105,55 @@ class Test_Assurance_Flow:
 			no_button = AssuranceButton( self.driver, "No" )
 			no_button.click()
 	
-	def _select_child_count(self, married):
-		if(married == True):
+	def _select_child_count(self, children):
+		if(children == True):
 			yes_button = AssuranceButton( self.driver, "Yes" )
 			yes_button.click()
 		else:
 			no_button = AssuranceButton( self.driver, "No" )
 			no_button.click()
-
 		
+	def _select_employment_status(self, employment):
+		continue_button = AssuranceButton( self.driver, employment )
+		continue_button.click()
 		
+	def _enter_income(self, income):
+		weight_input = AssuranceInput(self.driver, '//input')
+		weight_input.send_keys(income)
+		continue_button = AssuranceButton( self.driver, "Continue" )
+		continue_button.click()
+	
+	def _select_mortgage(self, mortgage):
+		if(mortgage == True):
+			yes_button = AssuranceButton( self.driver, "Yes" )
+			yes_button.click()
+		else:
+			no_button = AssuranceButton( self.driver, "No" )
+			no_button.click()
+	
+	def _select_other_debt(self, other_debt):
+		if(other_debt == True):
+			yes_button = AssuranceButton( self.driver, "Yes" )
+			yes_button.click()
+		else:
+			no_button = AssuranceButton( self.driver, "No" )
+			no_button.click()
+	
+	def _select_sex(self, customer_sex):
+		continue_button = AssuranceButton( self.driver, customer_sex )
+		continue_button.click()
+		
+	def _enter_contact_info(self, given_name, family_name, phone, email):
+		day_input = AssuranceInput(self.driver, '//input[@autocomplete="given-name"]')
+		day_input.send_keys(given_name)
+		day_input = AssuranceInput(self.driver, '//input[@autocomplete="family-name"]')
+		day_input.send_keys(family_name)
+		day_input = AssuranceInput(self.driver, '//input[@autocomplete="tel-national"]')
+		day_input.send_keys(phone)
+		day_input = AssuranceInput(self.driver, '//input[@autocomplete="email"]')
+		day_input.send_keys(email)
+		continue_button = AssuranceButton( self.driver, "View My Quote" )
+		continue_button.click()
 
 #	@pytest.mark.parameterize("zip, tobacco, birthdate, height, weight, sex, employment, kids, mortgage, income, quote_amount, quote_term, premium", test_data)
 	def test_base(self):
@@ -127,9 +166,17 @@ class Test_Assurance_Flow:
 		self._enter_birth_date("4", "04", "1970")
 		self._enter_height("68")
 		self._enter_weight("155")
-		#continue through the pre-existing conditions page
+		#continue through the pre-existing conditions page, not sure why the sleep is necessary here, need more info
+		time.sleep(1)
 		continue_button = AssuranceButton( self.driver, "Continue" )
 		continue_button.click()
-		self._select_marriage_status(True)
+		self._select_marriage_status(False)
 		self._select_child_count(False)
+		self._select_employment_status("Currently Employed")
+		self._enter_income("155000")
+		self._select_mortgage(False)
+		self._select_other_debt(False)
+		self._select_sex("Male")
+		self._enter_contact_info("John", "Doe", "5555555555", "johndoe@assurance.com")
+
 		assert 2 == 2
