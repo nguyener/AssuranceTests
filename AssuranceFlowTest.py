@@ -41,6 +41,7 @@ class Test_Assurance_Flow:
 		myself_button.click()
 	
 	def _select_tobacco_usage(self, tobacco):
+		time.sleep(1)
 		if(tobacco == True):
 			yes_button = AssuranceButton( self.driver, "Yes" )
 			yes_button.click()
@@ -98,6 +99,7 @@ class Test_Assurance_Flow:
 		continue_button.click()
 	
 	def _select_marriage_status(self, married):
+		time.sleep(1)
 		if(married == True):
 			yes_button = AssuranceButton( self.driver, "Yes" )
 			yes_button.click()
@@ -106,6 +108,7 @@ class Test_Assurance_Flow:
 			no_button.click()
 	
 	def _select_child_count(self, children):
+		time.sleep(1)
 		if(children == True):
 			yes_button = AssuranceButton( self.driver, "Yes" )
 			yes_button.click()
@@ -114,6 +117,7 @@ class Test_Assurance_Flow:
 			no_button.click()
 		
 	def _select_employment_status(self, employment):
+		time.sleep(1)
 		continue_button = AssuranceButton( self.driver, employment )
 		continue_button.click()
 		
@@ -124,6 +128,7 @@ class Test_Assurance_Flow:
 		continue_button.click()
 	
 	def _select_mortgage(self, mortgage):
+		time.sleep(1)
 		if(mortgage == True):
 			yes_button = AssuranceButton( self.driver, "Yes" )
 			yes_button.click()
@@ -132,6 +137,7 @@ class Test_Assurance_Flow:
 			no_button.click()
 	
 	def _select_other_debt(self, other_debt):
+		time.sleep(1)
 		if(other_debt == True):
 			yes_button = AssuranceButton( self.driver, "Yes" )
 			yes_button.click()
@@ -140,6 +146,7 @@ class Test_Assurance_Flow:
 			no_button.click()
 	
 	def _select_sex(self, customer_sex):
+		time.sleep(1)
 		continue_button = AssuranceButton( self.driver, customer_sex )
 		continue_button.click()
 		
