@@ -61,13 +61,13 @@ class Test_Assurance_Flow:
 		# The custom drop down doesn't play nice with selenium. The sleeps help because I think
 		# the animations are part of the hiccup.
 		time.sleep(1)
-		element = WebDriverWait(self.driver, 10).until(
+		dropdown = WebDriverWait(self.driver, 10).until(
 				EC.element_to_be_clickable((By.XPATH, '//div[@aria-haspopup="true"]')))
-		element.click()
+		dropdown.click()
 		time.sleep(1)
-		element = WebDriverWait(self.driver, 10).until(
+		dropdown_item = WebDriverWait(self.driver, 10).until(
 				EC.element_to_be_clickable((By.XPATH, '//li[@data-value="' + month + '"]')))
-		element.click()
+		dropdown_item.click()
 		time.sleep(1)
 		day_input = AssuranceInput(self.driver, '//div[@label="Day"]/input')
 		day_input.send_keys(day)
@@ -75,6 +75,43 @@ class Test_Assurance_Flow:
 		year_input.send_keys(year)
 		continue_button = AssuranceButton( self.driver, "Continue" )
 		continue_button.click()
+		
+	def _enter_height(self, height):
+		# The custom drop down doesn't play nice with selenium. The sleeps help because I think
+		# the animations are part of the hiccup.
+		time.sleep(1)
+		dropdown = WebDriverWait(self.driver, 10).until(
+				EC.element_to_be_clickable((By.XPATH, '//div[@aria-haspopup="true"]')))
+		dropdown.click()
+		time.sleep(1)
+		dropdown_item = WebDriverWait(self.driver, 10).until(
+				EC.element_to_be_clickable((By.XPATH, '//li[@data-value="' + height + '"]')))
+		dropdown_item.click()
+		time.sleep(1)
+		continue_button = AssuranceButton( self.driver, "Continue" )
+		continue_button.click()
+		
+	def _enter_weight(self, weight):
+		weight_input = AssuranceInput(self.driver, '//input')
+		weight_input.send_keys(weight)
+		continue_button = AssuranceButton( self.driver, "Continue" )
+		continue_button.click()
+	
+	def _select_marriage_status(self, married):
+		if(married == True):
+			yes_button = AssuranceButton( self.driver, "Yes" )
+			yes_button.click()
+		else:
+			no_button = AssuranceButton( self.driver, "No" )
+			no_button.click()
+	
+	def _select_child_count(self, married):
+		if(married == True):
+			yes_button = AssuranceButton( self.driver, "Yes" )
+			yes_button.click()
+		else:
+			no_button = AssuranceButton( self.driver, "No" )
+			no_button.click()
 
 		
 		
@@ -88,4 +125,11 @@ class Test_Assurance_Flow:
 		self._select_tobacco_usage(False)
 		self._enter_zip("34102")
 		self._enter_birth_date("4", "04", "1970")
+		self._enter_height("68")
+		self._enter_weight("155")
+		#continue through the pre-existing conditions page
+		continue_button = AssuranceButton( self.driver, "Continue" )
+		continue_button.click()
+		self._select_marriage_status(True)
+		self._select_child_count(False)
 		assert 2 == 2
