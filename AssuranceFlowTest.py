@@ -11,16 +11,10 @@ from AssuranceButton import AssuranceButton
 from AssuranceInput import AssuranceInput
 
 # test data is in the following order (parallels the flow)
-# (Insurance type, insuree, zip, tobacco usage, birthdate, height, weight, sex, employment,
+# (Insurance type, insuree, tobacco usage, zip, birthdate, height, weight, marriage status, children, employment, income, mortgage, other debt, sex, given name, family name, phone number, email, quote amount, quote term, premium)
 # number of kids, mortgage, income, quote amount, quote term, premium)
 
-test_data = [
-	("life", "Myself", 34102, False, "04/04/1970", 68, 155, "male", True, 0, False, 155000, 350000, 10, 40),
-	("life", "Myself", 10001, False, "04/04/1970", 68, 155, "male", True, 0, False, 155000, 350000, 10, 40)
-]
-	
-
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="function")
 def chrome_driver_init(request):
     chrome_driver = webdriver.Chrome()
     request.cls.driver = chrome_driver
@@ -162,28 +156,34 @@ class Test_Assurance_Flow:
 		continue_button = AssuranceButton( self.driver, "View My Quote" )
 		continue_button.click()
 
-#	@pytest.mark.parameterize("zip, tobacco, birthdate, height, weight, sex, employment, kids, mortgage, income, quote_amount, quote_term, premium", test_data)
-	def test_base(self):
-		u"""Parameterized test for the Assurance web flow"""
+#validation parameters - , quote_amount, quote_term, premium
+
+	
+	@pytest.mark.parametrize("insurance_type, insuree, tobacco, zipcode, birth_month, birth_day, birth_year, height, weight, marriage_status, children, employment, income, mortgage, other_debt, sex, given_name, family_name, phone_number, email", [
+		("life", "Myself", False, "34102", "4", "04", "1970", "68", "155", False, False, "Currently Employed", "155000", False, False, "Male", "John", "Doe", "6075472892", "johndoe@assurance.com"),# "350000", 10, 40)
+		("life", "Myself", False, "10001", "4", "04", "1970", "68", "155", False, False, "Currently Employed", "155000", False, False, "Male", "John", "Doe", "6075472892", "johndoe@assurance.com")# "350000", 10, 40)
+	])
+	def test_flow(self, insurance_type, insuree, tobacco, zipcode, birth_month, birth_day, birth_year, height, weight, marriage_status, children, employment, income, mortgage, other_debt, sex, given_name, family_name, phone_number, email):
 		self.driver.get("https://staging.assurance.com/")
-		self._select_insurance_type("life")
-		self._select_person_to_be_covered("Myself")
-		self._select_tobacco_usage(False)
-		self._enter_zip("34102")
-		self._enter_birth_date("4", "04", "1970")
-		self._enter_height("68")
-		self._enter_weight("155")
+		self._select_insurance_type(insurance_type)
+		self._select_person_to_be_covered(insuree)
+		self._select_tobacco_usage(tobacco)
+		self._enter_zip(zipcode)
+		self._enter_birth_date(birth_month, birth_day, birth_year)
+		self._enter_height(height)
+		self._enter_weight(weight)
 		#continue through the pre-existing conditions page, not sure why the sleep is necessary here, need more info
 		time.sleep(1)
 		continue_button = AssuranceButton( self.driver, "Continue" )
 		continue_button.click()
-		self._select_marriage_status(False)
-		self._select_child_count(False)
-		self._select_employment_status("Currently Employed")
-		self._enter_income("155000")
-		self._select_mortgage(False)
-		self._select_other_debt(False)
-		self._select_sex("Male")
-		self._enter_contact_info("John", "Doe", "5555555555", "johndoe@assurance.com")
+		self._select_marriage_status(marriage_status)
+		self._select_child_count(children)
+		self._select_employment_status(employment)
+		self._enter_income(income)
+		self._select_mortgage(mortgage)
+		self._select_other_debt(other_debt)
+		self._select_sex(sex)
+		self._enter_contact_info(given_name, family_name, phone_number, email)
+		self.driver.quit()
 
 		assert 2 == 2
