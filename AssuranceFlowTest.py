@@ -1,10 +1,13 @@
 #! ~/.pyenv/shims/python
 import pytest
 from selenium import webdriver
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+#from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+
+from AssuranceButton import AssuranceButton
 
 # test data is in the following order
 # (zip, tobacco usage, birthdate, height, weight, sex, employment,
@@ -33,26 +36,23 @@ class Test_Assurance_Flow:
 		self.driver.find_element_by_link_text("Calculate your coverage").click()
 	
 	def _select_person_to_be_covered(self, person):
-		if(person == "Myself"):
-			element = WebDriverWait(self.driver, 10).until(
-				EC.element_to_be_clickable((By.CLASS_NAME, "jss107")))
-			self.driver.find_element_by_class_name("jss107").click()
+		myself_button = AssuranceButton( self.driver, person )
+		myself_button.click()
 	
 	def _select_tobacco_usage(self, tobacco):
-		element = WebDriverWait(self.driver, 10).until(
-			EC.presence_of_element_located((By.CLASS_NAME, "jss110")))
-		element = WebDriverWait(self.driver, 10).until(
-			EC.element_to_be_clickable((By.CLASS_NAME, "jss110")))
 		if(tobacco == True):
-			(self.driver.find_elements_by_class_name("jss110"))[0].click()
+			myself_button = AssuranceButton( self.driver, "Yes" )
+			myself_button.click()
 		else:
-			(self.driver.find_elements_by_class_name("jss110"))[1].click()
+			myself_button = AssuranceButton( self.driver, "No" )
+			myself_button.click()
 			
 	def _enter_zip(self, zipcode):
 		element = WebDriverWait(self.driver, 10).until(
-			EC.presence_of_element_located((By.CLASS_NAME, "jss180")))
-		element.sendkeys(zipcode)
-		self.driver.find_element_by_link_text("Calculate your coverage").click()
+				EC.element_to_be_clickable((By.XPATH, "//input")))
+		element.send_keys(zipcode)
+		myself_button = AssuranceButton( self.driver, "Continue" )
+		myself_button.click()
 		
 		
 
@@ -62,6 +62,6 @@ class Test_Assurance_Flow:
 		self.driver.get("https://staging.assurance.com/")
 		self._select_insurance_type("life")
 		self._select_person_to_be_covered("Myself")
-		self._select_tobacco_usage(True)
-		#self._enter_zip("34102")
+		self._select_tobacco_usage(False)
+		self._enter_zip("34102")
 		assert 2 == 2
