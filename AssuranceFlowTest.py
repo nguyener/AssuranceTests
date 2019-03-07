@@ -1,13 +1,14 @@
 #! ~/.pyenv/shims/python
 import pytest
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-#from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
 from AssuranceButton import AssuranceButton
+from AssuranceInput import AssuranceInput
 
 # test data is in the following order
 # (zip, tobacco usage, birthdate, height, weight, sex, employment,
@@ -41,18 +42,40 @@ class Test_Assurance_Flow:
 	
 	def _select_tobacco_usage(self, tobacco):
 		if(tobacco == True):
-			myself_button = AssuranceButton( self.driver, "Yes" )
-			myself_button.click()
+			yes_button = AssuranceButton( self.driver, "Yes" )
+			yes_button.click()
 		else:
-			myself_button = AssuranceButton( self.driver, "No" )
-			myself_button.click()
+			no_button = AssuranceButton( self.driver, "No" )
+			no_button.click()
 			
 	def _enter_zip(self, zipcode):
+		zip_input = AssuranceInput(self.driver, '//input')
+		zip_input.send_keys(zipcode)
 		element = WebDriverWait(self.driver, 10).until(
 				EC.element_to_be_clickable((By.XPATH, "//input")))
 		element.send_keys(zipcode)
-		myself_button = AssuranceButton( self.driver, "Continue" )
-		myself_button.click()
+		continue_button = AssuranceButton( self.driver, "Continue" )
+		continue_button.click()
+		
+	def _enter_birth_date(self, month, day, year):
+		# The custom drop down doesn't play nice with selenium. The sleeps help because I think
+		# the animations are part of the hiccup.
+		time.sleep(1)
+		element = WebDriverWait(self.driver, 10).until(
+				EC.element_to_be_clickable((By.XPATH, '//div[@aria-haspopup="true"]')))
+		element.click()
+		time.sleep(1)
+		element = WebDriverWait(self.driver, 10).until(
+				EC.element_to_be_clickable((By.XPATH, '//li[@data-value="' + month + '"]')))
+		element.click()
+		time.sleep(1)
+		day_input = AssuranceInput(self.driver, '//div[@label="Day"]/input')
+		day_input.send_keys(day)
+		year_input = AssuranceInput(self.driver, '//div[@label="Year"]/input')
+		year_input.send_keys(year)
+		continue_button = AssuranceButton( self.driver, "Continue" )
+		continue_button.click()
+
 		
 		
 
@@ -64,4 +87,5 @@ class Test_Assurance_Flow:
 		self._select_person_to_be_covered("Myself")
 		self._select_tobacco_usage(False)
 		self._enter_zip("34102")
+		self._enter_birth_date("4", "04", "1970")
 		assert 2 == 2
