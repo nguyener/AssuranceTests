@@ -24,18 +24,16 @@ gitignore/Rails.gitignore
 *.rbc
 capybara-*.html
 .rspec
-/db/*.sqlite3
-/db/*.sqlite3-journal
-/public/system
-/coverage/
+db/
+coverage/
 /spec/tmp
 *.orig
 rerun.txt
 pickle-email-*.html
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+log/
+tmp/
 !/log/.keep
 !/tmp/.keep
 
@@ -52,7 +50,7 @@ config/master.key
 
 ## Environment normalization:
 /.bundle
-/vendor/bundle
+vendor/bundle
 
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
@@ -75,9 +73,7 @@ bower.json
 node_modules/
 
 # Ignore precompiled javascript packs
-/public/packs
-/public/packs-test
-/public/assets
+public/
 
 # Ignore yarn files
 /yarn-error.log
@@ -85,9 +81,14 @@ yarn-debug.log*
 .yarn-integrity
 
 # Ignore uploaded files in development
-/storage/*
+storage/
 !/storage/.keep
 
 #Ignore .idea/
 .idea/
+
+test/
+lib/
+bin/
+vendor/
 
