@@ -89,6 +89,5 @@ storage/
 
 test/
 lib/
-bin/
 vendor/
 
