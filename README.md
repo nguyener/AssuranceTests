@@ -1,24 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+How to install and play this Boggle game:
 
-Things you may want to cover:
+* Clone the source code ```git clone https://github.com/mzeb/AssuranceTests.git```
 
-* Ruby version
+* start the server ```rails server -p 3000 ```
 
-* System dependencies
+* launch a web browser session with localhost 3000 ```http://localhost:3000```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
