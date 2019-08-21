@@ -1,104 +1,93 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+Skip to content
 
-# C extensions
-*.so
+Search or jump to…
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+Pull requests
+Issues
+Marketplace
+Explore
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+@nguyener
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
+2,838
+88,217 43,944 github/gitignore
+ Code  Pull requests 105  Actions  Projects 0  Security  Insights
+gitignore/Rails.gitignore
+@okuramasafumi okuramasafumi Don't ignore tmp and log directory (#2999)
+1a417fe on Mar 14
+@arcresu @sidewinder94 @shawndavenport @maxehmookau @jeffrydegrande @defunkt @grossadamm @zellux @yaroslav @wafiq @valentine @tomafro @seenmyfate @chimame @renhx @lunks @pisaacs @sdhull @michaelminter @mwitek @okuramasafumi @martinciu @jgeiger @gurvircheema @frankel @fabianhjr
+67 lines (52 sloc)  1.26 KB
 
-# Translations
-*.mo
-*.pot
+*.rbc
+capybara-*.html
+.rspec
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/public/system
+/coverage/
+/spec/tmp
+*.orig
+rerun.txt
+pickle-email-*.html
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
 
-# Flask stuff:
-instance/
-.webassets-cache
+# TODO Comment out this rule if you are OK with secrets being uploaded to the repo
+config/initializers/secret_token.rb
+config/master.key
 
-# Scrapy stuff:
-.scrapy
+# Only include if you have production secrets in this file, which is no longer a Rails default
+# config/secrets.yml
 
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
+# dotenv
+# TODO Comment out this rule if environment variables can be committed
 .env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+## Environment normalization:
+/.bundle
+/vendor/bundle
 
-# Rope project settings
-.ropeproject
+# these should all be checked in to normalize the environment:
+# Gemfile.lock, .ruby-version, .ruby-gemset
 
-# mkdocs documentation
-/site
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
 
-# mypy
-.mypy_cache/
+# if using bower-rails ignore default bower_components path bower.json files
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
+
+# Ignore pow environment settings
+.powenv
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore node_modules
+node_modules/
+
+# Ignore precompiled javascript packs
+/public/packs
+/public/packs-test
+/public/assets
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+
+#Ignore .idea/
+.idea/
+
